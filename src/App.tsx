@@ -10,7 +10,7 @@ import {
 import { isProbablyImage, loadImage, LoadedImage } from './imageLoad';
 import { downloadBlob, exportComparison, exportFiltered } from './render';
 
-const DEFAULT_SCORES: ConeScores = { red: 100, green: 100, blue: 100 };
+const DEFAULT_SCORES: ConeScores = { red: 0, green: 70, blue: 100 };
 const IDENTITY_MATRIX: Matrix3 = [
   [1, 0, 0],
   [0, 1, 0],

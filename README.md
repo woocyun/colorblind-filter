@@ -1,5 +1,7 @@
 # Colorblindness Simulator
 
+**Live demo: [color.maeby.io](https://color.maeby.io)**
+
 A full-stack app that simulates colorblindness on user-uploaded images,
 calibrated from EnChroma test scores. The UI is Vite + React + TypeScript and
 all image processing runs client-side; a TypeScript Node/Express backend serves
@@ -59,18 +61,6 @@ HOST_PORT=8080 docker compose up -d --build
 `web` listens on `PORT` (default `3001`); compose maps `HOST_PORT` (default
 `3001`) to it. Copy [.env.example](.env.example) to `.env` to override —
 `docker compose` reads it automatically.
-
-## Deployment
-
-This runs as a single Node service — e.g. on a homelab box: `git pull`,
-`docker compose up -d --build`, done. Front it with whatever exposes it to the
-internet; a Cloudflare Tunnel run separately on the host (pointed at
-`http://localhost:3001`) needs no open ports and provides HTTPS + the public
-`color.maeby.io` hostname.
-
-Without Docker it's just as portable: `npm run build` then `npm start`, with
-`PORT` from the environment, on any Node 20+ host. `dist/` and `dist-server/`
-are gitignored, so build on the host (or ship them yourself).
 
 ## How it works
 
