@@ -1,0 +1,357 @@
+:root {
+  --bg: #121316;
+  --panel: #1b1d22;
+  --panel-2: #23262d;
+  --border: #32363f;
+  --text: #e8e9ec;
+  --muted: #9aa0ab;
+  --accent: #5b9dff;
+  --accent-text: #0b1220;
+  --danger: #ff6b6b;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 3vw, 32px);
+  padding-top: max(clamp(16px, 3vw, 32px), env(safe-area-inset-top));
+  padding-left: max(clamp(16px, 3vw, 32px), env(safe-area-inset-left));
+  padding-right: max(clamp(16px, 3vw, 32px), env(safe-area-inset-right));
+  padding-bottom: max(clamp(16px, 3vw, 32px), env(safe-area-inset-bottom));
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-header h1 {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  margin: 0 0 4px;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin: 24px 0;
+  flex: 1;
+}
+
+@media (min-width: 769px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+    align-items: start;
+  }
+}
+
+/* On mobile the canvas (content) comes first; that's already DOM order. */
+
+.image-col {
+  min-width: 0;
+}
+
+/* --- Dropzone --- */
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  background: var(--panel);
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  padding: 24px;
+}
+
+.dropzone.drag-over {
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+
+.dropzone-title {
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+}
+
+.dropzone-sub {
+  color: var(--muted);
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+}
+
+.dropzone-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Split canvas --- */
+
+.split-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.canvas-host {
+  display: block;
+  line-height: 0;
+}
+
+.split-handle-hit {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 44px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  pointer-events: none; /* wrapper handles all pointer events */
+}
+
+.split-handle-pill {
+  width: 14px;
+  height: 44px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid #000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Meta + actions --- */
+
+.image-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 10px 2px;
+}
+
+.image-actions,
+.download-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.download-actions {
+  flex-direction: column;
+}
+
+@media (min-width: 769px) {
+  .download-actions {
+    flex-direction: row;
+  }
+}
+
+.fineprint {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 10px 2px 0;
+}
+
+/* --- Buttons --- */
+
+button {
+  font: inherit;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, opacity 0.12s;
+}
+
+button:hover {
+  border-color: var(--accent);
+}
+
+button:active {
+  background: var(--panel);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.image-actions button {
+  flex: 1;
+}
+
+.download-actions button {
+  flex: 1;
+  width: 100%;
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+button.primary:hover {
+  filter: brightness(1.06);
+}
+
+/* --- Controls --- */
+
+.controls-col {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.blurb p {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.blurb a {
+  color: var(--accent);
+}
+
+.hint {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.cone-field {
+  margin-bottom: 18px;
+}
+
+.cone-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.cone-label {
+  font-weight: 600;
+}
+
+.cone-sub {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.cone-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  min-width: 2.5ch;
+  text-align: right;
+}
+
+.cone-inputs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cone-inputs input[type='range'] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+  height: 28px;
+}
+
+.cone-inputs input[type='number'] {
+  width: 72px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font: inherit;
+  text-align: center;
+}
+
+/* --- Matrix debug --- */
+
+.matrix-debug {
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.matrix-debug summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.matrix-debug pre {
+  background: #0c0d10;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  font-size: 0.78rem;
+  color: var(--text);
+}
+
+/* --- Misc --- */
+
+.error {
+  color: var(--danger);
+  margin: 12px 2px 0;
+  font-size: 0.9rem;
+}
+
+.app-footer {
+  color: var(--muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.app-footer p {
+  margin: 0;
+}

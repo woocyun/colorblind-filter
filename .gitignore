@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-server
+dist-ssr
+.env
+*.local
+.DS_Store
+.vite
+.claude
+
+# Generated build artifacts
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
